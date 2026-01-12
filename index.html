@@ -75,6 +75,13 @@
       color: #ff4d6d;
       margin-top: 15px;
     }
+    @keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
   </style>
 </head>
 
@@ -93,83 +100,165 @@
 </div>
 
 <script>
-  const questions = [
-    "How mad are you at me right now? 😬",
-    "Do you still care about this idiot (me)? 🙋‍♂️",
-    "On a scale of 1–10, how badly did I mess up? 😭",
-    "What do you miss the most about us? 🥺",
-    "Did I hurt you without realizing? 😔",
-    "Do you believe I can actually improve? 🌱",
-    "What’s one thing you wish I did differently? 💭",
-    "Do you know I think about you every day? 💗",
-    "Would you slap me or hug me first? 🙈",
-    "Do you still smile when you see my name? 😌",
-    "Can I still call you my pookie? 🧸",
-    "Will you give me one more chance to be better? 🤍"
-  ];
+  let step = 0;
 
-  let index = -1;
+  const card = document.getElementById("card");
 
   function vibrate() {
-    if (navigator.vibrate) {
-      navigator.vibrate(80);
-    }
+    if (navigator.vibrate) navigator.vibrate(60);
+  }
+
+  function startMusic() {
+    document.getElementById("bgMusic").play();
   }
 
   function next() {
     vibrate();
+    step++;
 
-    if (index === -1) {
-      document.getElementById("bgMusic").play();
+    if (step === 1) {
+      startMusic();
+      card.innerHTML = `
+        <h2>Deepanshi 💗</h2>
+        <p>Are you still angry with me?</p>
+        <button onclick="next()">Yes 😡</button>
+        <button onclick="next()">Thoda sa 😐</button>
+        <button onclick="next()">No but drama chalu hai 😌</button>
+      `;
     }
 
-    index++;
-
-    if (index < questions.length) {
-      document.getElementById("card").innerHTML = `
-        <h2>Deepanshi 💗</h2>
-        <p>${questions[index]}</p>
-        <button onclick="next()">Next 🩷</button>
+    else if (step === 2) {
+      card.innerHTML = `
+        <h2>Pookie 🧸</h2>
+        <p>Do you still care about this idiot (me)?</p>
+        <button onclick="next()">Yes</button>
+        <button onclick="next()">Definitely yes</button>
+        <button onclick="next()">Obviously 🙄</button>
       `;
-    } else {
+    }
+
+    else if (step === 3) {
+      card.innerHTML = `
+        <h2>Baccha 🩷</h2>
+        <p>On a scale of 1–10, how badly did I mess up?</p>
+        <input type="range" min="1" max="10" value="7" style="width:100%">
+        <button onclick="next()">Submit 😭</button>
+      `;
+    }
+
+    else if (step === 4) {
+      card.innerHTML = `
+        <h2>Deepanshi 💭</h2>
+        <p>What do you miss the most about us?</p>
+        <button onclick="next()">Talking randomly</button>
+        <button onclick="next()">My stupid jokes</button>
+        <button onclick="next()">Everything 😔</button>
+      `;
+    }
+
+    else if (step === 5) {
+      card.innerHTML = `
+        <h2>Pookie 🥺</h2>
+        <p>One word you would use for me right now?</p>
+        <input type="text" placeholder="Type here..." style="width:100%;padding:10px;border-radius:10px;border:1px solid #ccc;">
+        <button onclick="next()">Okay 😶</button>
+      `;
+    }
+
+    else if (step === 6) {
+      card.innerHTML = `
+        <h2>Baccha 🌱</h2>
+        <p>Do you think I can actually improve?</p>
+        <button onclick="next()">Maybe</button>
+        <button onclick="next()">Yes, if you try</button>
+        <button onclick="next()">Surprisingly… yes</button>
+      `;
+    }
+
+    else if (step === 7) {
+  card.innerHTML = `
+    <h2>Deepanshi 💗</h2>
+    <p>Would you slap me or hug me first?</p>
+
+    <button onclick="fake()">Ignore you 😤</button>
+    <button onclick="next()">Slap 👋</button>
+    <button onclick="next()">Hug 🤍</button>
+    <button onclick="next()">Both 🙃</button>
+
+    <p id="warning" style="color:#ff4d6d;margin-top:10px;"></p>
+  `;
+}
+
+    else if (step === 8) {
+      card.innerHTML = `
+        <h2>Pookie 🧸</h2>
+        <p>Can I still call you mine?</p>
+        <button onclick="next()">Yes</button>
+        <button onclick="next()">Obviously</button>
+        <button onclick="next()">Always 💞</button>
+      `;
+    }
+
+    else if (step === 9) {
+      card.innerHTML = `
+        <h2>Baccha 🥹</h2>
+        <p>Will you give me one more chance?</p>
+        <button onclick="next()">Yes</button>
+        <button onclick="next()">Okay but don’t mess up</button>
+        <button onclick="next()">I already did 😌</button>
+      `;
+    }
+
+    else {
       finalLove();
     }
   }
 
   function finalLove() {
-    document.getElementById("card").innerHTML = `
-      <h2>Hey baccha 🩷</h2>
+    card.innerHTML = `
+      <h2>Hey Deepanshi 🩷</h2>
       <p>
-        I know I’m not perfect.<br><br>
-        But my feelings for you are real.<br><br>
-        I don’t want to win an argument.<br>
-        I want to win *you* back.
+        I know I mess up.<br><br>
+        But my feelings for you are real.<br>
+        And they’re not going anywhere.
       </p>
       <div class="love">I LOVE YOU 💗💗💗</div>
-      <button onclick="heartShower()">Always & Forever 🥺</button>
+      <button onclick="heartShower()">Come here 🥺</button>
     `;
   }
+function fake() {
+  vibrate();
+  const warn = document.getElementById("warning");
+  warn.innerText = "Nice try 😌 not an option.";
+
+  // shake effect
+  card.style.animation = "shake 0.3s";
+  setTimeout(() => card.style.animation = "", 300);
+}
 
   function heartShower() {
-    for (let i = 0; i < 50; i++) {
-      createHeart();
+    for (let i = 0; i < 60; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💗";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5000);
     }
   }
 
-  function createHeart() {
+  setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "💗";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    heart.style.animationDuration = "6s";
     document.body.appendChild(heart);
 
-    setTimeout(() => {
-      heart.remove();
-    }, 6000);
-  }
-
-  setInterval(createHeart, 600);
+    setTimeout(() => heart.remove(), 6000);
+  }, 700);
 </script>
 
 </body>
