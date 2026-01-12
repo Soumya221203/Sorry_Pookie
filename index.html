@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Deepanshi 💗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #ffeef2, #ffd6e0);
+      overflow-x: hidden;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 25px;
+      padding: 25px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      color: #ff4d6d;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #333;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      background: #ff6b81;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff4d6d;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 5s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0.7; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .love {
+      font-size: 22px;
+      color: #ff4d6d;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_7e61bb0a9d.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <div class="card" id="card">
+    <h2>Hey Deepanshi 🩷</h2>
+    <p id="question">Pookie… can you promise to answer honestly?</p>
+    <button onclick="next()">Okay baccha 😌</button>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    "How mad are you at me right now? 😬",
+    "Do you still care about this idiot (me)? 🙋‍♂️",
+    "On a scale of 1–10, how badly did I mess up? 😭",
+    "What do you miss the most about us? 🥺",
+    "Did I hurt you without realizing? 😔",
+    "Do you believe I can actually improve? 🌱",
+    "What’s one thing you wish I did differently? 💭",
+    "Do you know I think about you every day? 💗",
+    "Would you slap me or hug me first? 🙈",
+    "Do you still smile when you see my name? 😌",
+    "Can I still call you my pookie? 🧸",
+    "Will you give me one more chance to be better? 🤍"
+  ];
+
+  let index = -1;
+
+  function vibrate() {
+    if (navigator.vibrate) {
+      navigator.vibrate(80);
+    }
+  }
+
+  function next() {
+    vibrate();
+
+    if (index === -1) {
+      document.getElementById("bgMusic").play();
+    }
+
+    index++;
+
+    if (index < questions.length) {
+      document.getElementById("card").innerHTML = `
+        <h2>Deepanshi 💗</h2>
+        <p>${questions[index]}</p>
+        <button onclick="next()">Next 🩷</button>
+      `;
+    } else {
+      finalLove();
+    }
+  }
+
+  function finalLove() {
+    document.getElementById("card").innerHTML = `
+      <h2>Hey baccha 🩷</h2>
+      <p>
+        I know I’m not perfect.<br><br>
+        But my feelings for you are real.<br><br>
+        I don’t want to win an argument.<br>
+        I want to win *you* back.
+      </p>
+      <div class="love">I LOVE YOU 💗💗💗</div>
+      <button onclick="heartShower()">Always & Forever 🥺</button>
+    `;
+  }
+
+  function heartShower() {
+    for (let i = 0; i < 50; i++) {
+      createHeart();
+    }
+  }
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 6000);
+  }
+
+  setInterval(createHeart, 600);
+</script>
+
+</body>
+</html>
